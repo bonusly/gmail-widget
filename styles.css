@@ -1,0 +1,47 @@
+div.column_box{
+  padding:12px 0;
+  border-left:1px solid #d7d7d7;
+  border-right:1px solid #d7d7d7;
+}
+
+div.name{
+  width:220px;
+  padding:0 0 6px 0;
+}
+
+div.name label{
+  width:50px;
+  font-weight: bold;
+  float:left;
+  display:block;
+  margin:0 10px; padding:0;
+  line-height:28px;
+}
+
+div.name select{
+  width:140px;
+  float:right;
+  display:block;
+  line-height:28px;
+  height:28px;
+  margin:0 10px 0 0;
+  padding:0;
+  background:transparent;
+  border: 1px solid #d7d7d7;
+  color: #444;
+}
+
+div.name textarea{
+  width:198px;
+  display:block;
+  line-height:20px;
+  height:100px;
+  margin:0 10px;
+  padding:0;
+  background:transparent;
+  border: 1px solid #d7d7d7;
+  color: #444;
+}
+
+
+.gmail_simple_button{}
