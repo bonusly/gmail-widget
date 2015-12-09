@@ -1,23 +1,20 @@
-var cachedCompanyPromises = {};
-
 var seenSidebarEmails = new WeakMap();
 var sidebarForThread = new WeakMap();
-
-var bnslyInfoPromise = null;
-var neighborhoodPromise = null;
-var userPromise = null;
-var companyPromise = null;
+var thread_users = [];
 
 var sidebarTemplatePromise = null;
-
 var sidebarShowing = false;
 
 var me = null;
+var neighborhood = [];
+var company_users = [];
+
+var user_map = [];
 
 InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {  
   
 	sdk.Conversations.registerMessageViewHandler(function(messageView) {
-  	if(!sidebarShowing){
+  	if(!sidebarShowing || true){
       var threadView = messageView.getThreadView();
   		if (!seenSidebarEmails.has(threadView)) {
   			seenSidebarEmails.set(threadView, []);
@@ -25,16 +22,35 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
 
   		var contacts = messageView.getRecipients();
   		contacts.push(messageView.getSender());
-
   		for (var i = 0; i < contacts.length; i++) {
   			var contact = contacts[i];
   			if (seenSidebarEmails.get(threadView).indexOf([contact.name, contact.emailAddress]) != -1) {
   				continue;
   			}
   			seenSidebarEmails.get(threadView).push([contact.name, contact.emailAddress]);
+        thread_users.push(contact.emailAddress);
   		}
-    
-      getUserInfo().then(function(m){ me = m.result; addSidebar(threadView) });
+      
+      getUserInfo().then(function(m){
+        //if m is false, the user is not logged in
+        if(m){
+          me = m.result;
+          getNeighborhoodInfo(me.id).then(function(n){
+            _.each(n.result, function(neighbor){
+              neighborhood.push([neighbor.username, neighbor.email])
+            });
+            getCompanyUsers().then(function(cu){
+              _.each(cu.result, function(company_user){
+                if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
+              });
+              addSidebar(threadView);
+            });
+          });
+        }else{
+          //user is not logged in
+          addLoggedOutSidebar(threadView);
+        }
+      });
     }
   });
 
@@ -53,29 +69,65 @@ function addSidebar(threadView) {
 
   if (!sidebarTemplatePromise) {
     sidebarTemplatePromise = getTemplate(chrome.runtime.getURL('sidebarTemplate.html'));    
-  }    
-    console.log(me)
-  
+  }      
     Promise.all([
       get("companies/show", {}, "GET"),
-      get("users/"+me.id+"/neighborhood", {}, "GET"),
       sidebarTemplatePromise
     ])
     .then(function(results) {
       var company = results[0].result;
-      var neighborhood = results[1].result;
-      var html = results[2];
+      var html = results[1];
       var template = _.template(html);
       sidebarShowing = true;
-      console.log(neighborhood);  
-      sidebarForThread.get(threadView).innerHTML = sidebarForThread.get(threadView).innerHTML + template({
+      sidebarForThread.get(threadView).innerHTML = template({
         company: company,
         me: me,
         neighborhood: neighborhood,
-        contacts: seenSidebarEmails.get(threadView)
+        company_users: company_users
+      });
+      $('#bnsly_submit_link').click(function(){
+        //gather params
+        var access_token = me.access_token;
+        var message = encodeURIComponent($('#bnsly_give').val());
+        //TODO: TR -this would be a great place to validate the params
+    		$.ajax({
+    			url: "https://bonus.ly/api/v1/bonuses/create_from_message?access_token="+access_token+"&message="+message,
+    			type: "POST",
+    			data: null
+    		}).done(function(resp){
+    		  if(resp.success){
+    		    var feedback = "<h4 class='success'>Your reward has been granted.</h4>"
+    		  }else{
+    		    var feedback = "<h4 class='error'>Sorry, something went wrong.</h4>"
+    		  }
+          $('#bnsly_give').parent().prepend(feedback);
+    		});
       });
     });
+}
 
+function addLoggedOutSidebar(threadView) {
+	if (!sidebarForThread.has(threadView)) {
+		sidebarForThread.set(threadView, document.createElement('div'));
+
+		threadView.addSidebarContentPanel({
+			el: sidebarForThread.get(threadView),
+			title: "Bonusly - Give",
+			iconUrl: chrome.runtime.getURL('images/bonusly.png')
+		});
+	}
+
+  if (!sidebarTemplatePromise) {
+    sidebarTemplatePromise = getTemplate(chrome.runtime.getURL('loggedOutSidebarTemplate.html'));    
+  }      
+    Promise.all([
+      sidebarTemplatePromise
+    ])
+    .then(function(results) {
+      sidebarShowing = true;
+      var template = _.template(results[0]);
+      sidebarForThread.get(threadView).innerHTML = template({});
+    });
 }
 
 function getTemplate(url) {
@@ -99,33 +151,24 @@ function get(url, params, method) {
 	);
 }
 
-function bnslyGet(url, params, method) {
-	return bnslyInfoPromise.then(function(info) {
-		return get(url, params, method);
-	});
+function getNeighborhoodInfo(user_id){
+    return get("users/"+me.id+"/neighborhood", {}, "GET").then(function(response){
+  	  return response;
+	  });
 }
 
-function get_neighborhood_info(params,user_id){
-	return neighborhoodPromise.then(function(info) {
-    var url = "users/"+user_id+"/neighborhood";
-    var method = "GET";
-    
-		return get(url, params, method);
-	});
+function getCompanyUsers(){
+    return get("users", {}, "GET").then(function(response){
+  	  return response;
+	  });
 }
-
-function get_company_info(params){
-	return companyPromise.then(function(info) {
-    var url = "companies/show";
-    var method = "GET";
-    
-		return get(url, params, method);
-	});
-}
-
 
 function getUserInfo() {
 	return get('users/me', {}, "GET").then(function(response){
   	return response;
-	});
+	}, function(err) {
+    return false;
+  }
+  );
 }
+

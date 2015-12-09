@@ -25,6 +25,7 @@
   ],
   "web_accessible_resources": [
     "sidebarTemplate.html",
+    "loggedOutSidebarTemplate.html",
     "images/bonusly.png"
   ],
   "manifest_version": 2
