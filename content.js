@@ -93,7 +93,8 @@ function addSidebar(threadView) {
     		$.ajax({
     			url: "https://bonus.ly/api/v1/bonuses/create_from_message?access_token="+access_token+"&message="+message,
     			type: "POST",
-    			data: null
+    			data: null,
+          headers: {"Application-Name": "gmail-widget/1.0"}
     		}).done(function(resp){
     		  if(resp.success){
     		    var feedback = "<h4 class='success'>Your reward has been granted.</h4>"
