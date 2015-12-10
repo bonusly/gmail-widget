@@ -6,6 +6,7 @@ var sidebarTemplatePromise = null;
 var sidebarShowing = false;
 
 var me = null;
+var access_token = null;
 var neighborhood = [];
 var company_users = [];
 
@@ -87,7 +88,6 @@ function addSidebar(threadView) {
       });
       $('#bnsly_submit_link').click(function(){
         //gather params
-        var access_token = me.access_token;
         var message = encodeURIComponent($('#bnsly_give').val());
         //TODO: TR -this would be a great place to validate the params
     		$.ajax({
@@ -147,6 +147,9 @@ function get(url, params, method) {
 			url: "https://bonus.ly/api/v1/" + url,
 			type: method,
 			data: params
+		}).done(function(data, textStatus, request){
+      var _at = request.getResponseHeader('X-BONUSLY-Authentication-Token')
+		  if(_at){ access_token = _at; }
 		})
 	);
 }
