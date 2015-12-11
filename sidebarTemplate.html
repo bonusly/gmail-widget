@@ -1,6 +1,6 @@
 <div class="column_box">
   <div class="name">
-    <textarea name="bnsly_give" id="bnsly_give">+<%= company.give_amounts[0] %> to <%-_.uniq(company_users).join()%><%if(company.hashtagging_mode == 'at_least_one_company_hashtag'){%> for <%- company.suggested_hashtags[0] %><%}%>
+    <textarea name="bnsly_give" id="bnsly_give">+<%= company.give_amounts[0] %> <%-_.uniq(company_users).join()%><%if(company.hashtagging_mode == 'at_least_one_company_hashtag'){%> <%- company.suggested_hashtags[0] %><%}%>
     </textarea>
   </div>
   <div class="name" style="text-align:right"> 
