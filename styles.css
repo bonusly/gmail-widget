@@ -1,5 +1,29 @@
+div.aAy.aIf-aLe.J-KU-KO{
+  
+}
+
+div.aKp.inboxsdk__tab_icon{
+  width:16px;
+  height:16px;
+  
+}
+
+div.aKp.inboxsdk__tab_icon img{
+  margin-left:10px;
+  margin-top:10px;
+}
+
+div.aKw{
+  
+}
+
+div.inboxsdk__tab_title{
+  padding: 0 0 0 18px;
+  line-height: 26px;
+}
+  
 div.column_box{
-  padding:12px 0;
+  padding:0;
   border-left:1px solid #d7d7d7;
   border-right:1px solid #d7d7d7;
 }
@@ -22,8 +46,9 @@ div.column_box h4.error{
 }
 
 div.name{
-  width:220px;
-  padding:0 0 6px 0;
+  width:210px;
+  padding:10px 0 0;
+  margin:0;
 }
 
 div.name label{
@@ -49,7 +74,7 @@ div.name select{
 }
 
 div.name textarea#bnsly_give{
-  width:198px;
+  width:196px;
   display:block;
   line-height:20px;
   height:40px;
@@ -60,5 +85,13 @@ div.name textarea#bnsly_give{
   color: #444;
 }
 
-
-.gmail_simple_button{}
+div.name.cta_button{
+  padding-bottom:20px;
+  text-align:right;
+}
+.gmail_simple_button{
+  margin:0;
+}
+.gmail_simple_button .T-I{
+  margin-right:0;
+}

@@ -104,6 +104,9 @@ function addSidebar(threadView) {
     		    var feedback = "<h4 class='error'>Sorry, something went wrong.</h4>"
     		  }
           $('#bnsly_give').parent().prepend(feedback);
+    		}).fail(function(jqXHR, status){
+          var feedback = "<h4 class='error'>"+jqXHR.responseJSON.errors.reason.human+"</h4>"
+          $('#bnsly_give').parent().prepend(feedback);
     		});
       });
     });
