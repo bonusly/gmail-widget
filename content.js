@@ -1,7 +1,7 @@
 var seenSidebarEmails = new WeakMap();
 var sidebarForThread = new WeakMap();
 var thread_users = [];
-
+var threadView = new WeakMap();
 var sidebarTemplatePromise = null;
 var sidebarShowing = false;
 
@@ -13,10 +13,9 @@ var company_users = [];
 var user_map = [];
 
 InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {  
-  
 	sdk.Conversations.registerMessageViewHandler(function(messageView) {
   	if(!sidebarShowing || true){
-      var threadView = messageView.getThreadView();
+      threadView = messageView.getThreadView();
   		if (!seenSidebarEmails.has(threadView)) {
   			seenSidebarEmails.set(threadView, []);
   		}
@@ -59,7 +58,8 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
 
 });
 
-function addSidebar(threadView) {
+function addSidebar(threadview) {
+  threadView = threadview;
 	if (!sidebarForThread.has(threadView)) {
 		sidebarForThread.set(threadView, document.createElement('div'));
 
@@ -88,6 +88,7 @@ function addSidebar(threadView) {
         neighborhood: neighborhood,
         company_users: company_users
       });
+      $('textarea.animated').autosize();
       $('#bnsly_submit_link').click(function(){
         //gather params
         var message = encodeURIComponent($('#bnsly_give').val());
@@ -99,20 +100,32 @@ function addSidebar(threadView) {
           headers: {"Application-Name": "gmail-widget/1.0"}
     		}).done(function(resp){
     		  if(resp.success){
-    		    var feedback = "<h4 class='success'>Your reward has been granted.</h4>"
+    		    var feedback = "<h4 class='success'>Your bonus has been granted.</h4>" 
+            $("div.name").remove();
+            console.log('still logged in?', threadView);
+            setTimeout("resetSidebar(threadView)", 2000);
     		  }else{
     		    var feedback = "<h4 class='error'>Sorry, something went wrong.</h4>"
     		  }
-          $('#bnsly_give').parent().prepend(feedback);
+          $('#bnsly_feedback').html(feedback);
+          
     		}).fail(function(jqXHR, status){
           var feedback = "<h4 class='error'>"+jqXHR.responseJSON.errors.reason.human+"</h4>"
-          $('#bnsly_give').parent().prepend(feedback);
+          $('#bnsly_feedback').html(feedback);
     		});
       });
     });
 }
 
-function addLoggedOutSidebar(threadView) {
+
+function resetSidebar(threadview) {
+  threadView = threadview;
+  console.log('resetting', threadView);
+  //addSidebar(threadView);
+}
+
+function addLoggedOutSidebar(threadview) {
+  threadView = threadview;
 	if (!sidebarForThread.has(threadView)) {
 		sidebarForThread.set(threadView, document.createElement('div'));
 

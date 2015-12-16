@@ -83,6 +83,7 @@ div.name textarea#bnsly_give{
   background:transparent;
   border: 1px solid #d7d7d7;
   color: #444;
+  resize:vertical;
 }
 
 div.name.cta_button{

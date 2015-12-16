@@ -12,6 +12,7 @@
         "underscore.js",
         "jquery.js",
         "inboxsdk.js",
+        "jquery.autosize.min.js",
         "content.js"
       ],
       "css": ["styles.css"],
