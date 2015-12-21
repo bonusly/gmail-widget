@@ -8,8 +8,9 @@ var sidebarShowing = false;
 var me = null;
 var access_token = null;
 var neighborhood = [];
+var company = null;
 var company_users = [];
-
+var all_company_users = [];
 var user_map = [];
 
 InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {  
@@ -41,6 +42,7 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
             });
             getCompanyUsers().then(function(cu){
               _.each(cu.result, function(company_user){
+                if(me.username != company_user.username){ all_company_users.push(company_user.username)}
                 if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
               });
               if(company_users.length > 0){
@@ -78,7 +80,7 @@ function addSidebar(threadview) {
       sidebarTemplatePromise
     ])
     .then(function(results) {
-      var company = results[0].result;
+      company = results[0].result;
       var html = results[1];
       var template = _.template(html);
       sidebarShowing = true;
@@ -89,6 +91,9 @@ function addSidebar(threadview) {
         company_users: company_users
       });
       $('textarea.animated').autosize();
+      $('textarea#bnsly_give').atwho({at:"@", 'data': all_company_users});
+      $('textarea#bnsly_give').atwho({at:"#", 'data': company.suggested_hashtags.map(function(h){ return h.substring(1) })});
+      $('textarea#bnsly_give').atwho({at:"+", 'data': company.give_amounts});
       $('#bnsly_submit_link').click(function(){
         //gather params
         var message = encodeURIComponent($('#bnsly_give').val());

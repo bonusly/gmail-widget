@@ -12,6 +12,8 @@
         "underscore.js",
         "jquery.js",
         "inboxsdk.js",
+        "jquery.caret.js",
+        "jquery.atwho.js",
         "jquery.autosize.min.js",
         "content.js"
       ],
