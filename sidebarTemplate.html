@@ -1,8 +1,7 @@
 <div class="column_box">
   <div id="bnsly_feedback"></div>
   <div class="name">
-    <textarea class="animated" name="bnsly_give" id="bnsly_give">+<%= company.give_amounts[0] %> <%-_.uniq(company_users).join()%><%if(company.hashtagging_mode == 'at_least_one_company_hashtag'){%> <%- company.suggested_hashtags[0] %><%}%>
-    </textarea>
+    <textarea class="animated" name="bnsly_give" id="bnsly_give"></textarea>
   </div>
   <div class="name cta_button"> 
       <a class="gmail_simple_button" id="bnsly_submit_link">
