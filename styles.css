@@ -100,12 +100,13 @@ div.name.cta_button{
 
 .atwho-view {
     position:absolute;
+    font-size:12px;
     top: 0;
     left: 0;
     display: none;
     margin-top: 18px;
-    background: white;
-    color: black;
+    background: #efefef;
+    color: #444;
     border: 1px solid #DDD;
     border-radius: 3px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -116,14 +117,14 @@ div.name.cta_button{
 }
 
 .atwho-view .cur {
-    background: #3366FF;
+    background: #3791bf;
     color: white;
 }
 .atwho-view .cur small {
     color: white;
 }
 .atwho-view strong {
-    color: #3366FF;
+    color: #3791bf;
 }
 .atwho-view .cur strong {
     color: white;

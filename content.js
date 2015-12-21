@@ -45,7 +45,7 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
                 if(me.username != company_user.username){ all_company_users.push(company_user.username)}
                 if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
               });
-              if(company_users.length > 0){
+              if(all_company_users.length > 0){
                 addSidebar(threadView);
               }
             });
