@@ -105,7 +105,7 @@ function addSidebar(threadview) {
           headers: {"Application-Name": "gmail-widget/1.0"}
     		}).done(function(resp){
     		  if(resp.success){
-    		    var feedback = "<h4 class='success'>Your bonus has been granted.</h4>" 
+    		    var feedback = "<h4 class='success'>Your bonus has been given.</h4>" 
             $("div.name").remove();
             console.log('still logged in?', threadView);
             setTimeout("resetSidebar(threadView)", 2000);
@@ -115,7 +115,8 @@ function addSidebar(threadview) {
           $('#bnsly_feedback').html(feedback);
           
     		}).fail(function(jqXHR, status){
-          var feedback = "<h4 class='error'>"+jqXHR.responseJSON.errors.reason.human+"</h4>"
+          //var feedback = "<h4 class='error'>"+jqXHR.responseJSON.errors.reason.human+"</h4>"
+          var feedback = "<h4 class='error'>There was an error. Please make sure you have included an amount, a user, and a company value.</h4>"
           $('#bnsly_feedback').html(feedback);
     		});
       });
