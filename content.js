@@ -41,6 +41,7 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
               neighborhood.push([neighbor.username, neighbor.email])
             });
             getCompanyUsers().then(function(cu){
+              all_company_users = []; //to prevent this list having duplicates when a new thread is loaded.
               _.each(cu.result, function(company_user){
                 if(me.username != company_user.username){ all_company_users.push(company_user.username)}
                 if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
@@ -91,7 +92,7 @@ function addSidebar(threadview) {
         company_users: company_users
       });
       $('textarea.animated').autosize();
-      $('textarea#bnsly_give').atwho({at:"@", 'data': all_company_users});
+      $('textarea#bnsly_give').atwho({at:"@", 'data': all_company_users}); console.log("ACU:", all_company_users);
       $('textarea#bnsly_give').atwho({at:"#", 'data': company.suggested_hashtags.map(function(h){ return h.substring(1) })});
       $('textarea#bnsly_give').atwho({at:"+", 'data': company.give_amounts});
       $('#bnsly_submit_link').click(function(){
