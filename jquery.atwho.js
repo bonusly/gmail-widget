@@ -375,7 +375,7 @@
 
             Controller.prototype.insert_content_for = function ($li) {
                 var data, data_value, tpl;
-                data_value = $li.data('value');
+                data_value = $li.data('value').split(' (')[0]; //removing email address
                 tpl = this.get_opt('insert_tpl');
                 if (this.$inputor.is('textarea, input') || !tpl) {
                     return data_value;
