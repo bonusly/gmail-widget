@@ -92,7 +92,8 @@ function addSidebar(threadview) {
         company_users: company_users
       });
       $('textarea.animated').autosize();
-      $('textarea#bnsly_give').atwho({at:"@", 'data': all_company_users}); console.log("ACU:", all_company_users);
+      $('textarea#bnsly_give').atwho({at:"@", 'data': all_company_users});
+      $('textarea#bnsly_give').atwho({at:"&", 'data': all_company_users});
       $('textarea#bnsly_give').atwho({at:"#", 'data': company.suggested_hashtags.map(function(h){ return h.substring(1) })});
       $('textarea#bnsly_give').atwho({at:"+", 'data': company.give_amounts});
       $('#bnsly_submit_link').click(function(){
