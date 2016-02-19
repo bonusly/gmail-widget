@@ -43,8 +43,8 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
             getCompanyUsers().then(function(cu){
               all_company_users = []; //to prevent this list having duplicates when a new thread is loaded.
               _.each(cu.result, function(company_user){
-                if(me.username != company_user.username){ all_company_users.push(company_user.username + ' ('+company_user.email+')')}
-                if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
+                if(me.username != company_user.username){ all_company_users.push( company_user.username )}
+                //if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
               });
               if(all_company_users.length > 0){
                 addSidebar(threadView);
@@ -104,7 +104,7 @@ function addSidebar(threadview) {
     			url: "https://bonus.ly/api/v1/bonuses/create_from_message?access_token="+access_token+"&message="+message,
     			type: "POST",
     			data: null,
-          headers: {"Application-Name": "gmail-widget/1.0"}
+          headers: {"Application-Name": "Gmail Widget/1.0"}
     		}).done(function(resp){
     		  if(resp.success){
     		    var feedback = "<h4 class='success'>Your bonus has been given.</h4>" 
