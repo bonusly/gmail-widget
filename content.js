@@ -101,7 +101,7 @@ function addSidebar(threadview) {
         var message = encodeURIComponent($('#bnsly_give').val());
         //TODO: TR -this would be a great place to validate the params
     		$.ajax({
-    			url: "https://bonus.ly/api/v1/bonuses/create_from_message?access_token="+access_token+"&message="+message,
+    			url: "https://bonus.ly/api/v1/bonuses/?access_token="+access_token+"&reason="+message,
     			type: "POST",
     			data: null,
           headers: {"Application-Name": "Gmail Widget/1.0"}
@@ -117,7 +117,6 @@ function addSidebar(threadview) {
           $('#bnsly_feedback').html(feedback);
           
     		}).fail(function(jqXHR, status){
-          //var feedback = "<h4 class='error'>"+jqXHR.responseJSON.errors.reason.human+"</h4>"
           var feedback = "<h4 class='error'>There was an error. Please make sure you have included an amount, a user, and a company value.</h4>"
           $('#bnsly_feedback').html(feedback);
     		});
