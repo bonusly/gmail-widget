@@ -375,7 +375,9 @@
 
             Controller.prototype.insert_content_for = function ($li) {
                 var data, data_value, tpl;
-                data_value = $li.data('value').split(' (')[0]; //removing email address
+                if(this.at == '&' || this.at == '@'){
+                  data_value = this.at + '' + ($li.data('value').split(' | ')[1].split('<')[0]); //grab username only and remove the trailing span tag
+                }else{ data_value = $li.data('value'); }
                 tpl = this.get_opt('insert_tpl');
                 if (this.$inputor.is('textarea, input') || !tpl) {
                     return data_value;
