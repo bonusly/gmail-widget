@@ -1,6 +1,7 @@
 {
   "name": "Bonusly Bonus Sidebar",
   "description": "Adds bonus functionality to a Gmail thread via sidebar.",
+  "short_name": "Bonusly",
   "version": "1.0",
   "icons": { "16": "images/icon16.png",
              "32": "images/icon32.png",
