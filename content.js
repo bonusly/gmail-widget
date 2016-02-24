@@ -138,8 +138,8 @@ function addLoggedOutSidebar(threadview) {
 
 		threadView.addSidebarContentPanel({
 			el: sidebarForThread.get(threadView),
-			title: "Bonusly - Give",
-			iconUrl: chrome.runtime.getURL('images/bonusly.png')
+      title: "Bonusly - Give",
+      iconUrl: chrome.runtime.getURL('images/bonusly.png')
 		});
 	}
 

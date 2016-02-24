@@ -74,12 +74,12 @@ div.name select{
 }
 
 div.name textarea#bnsly_give{
-  width:196px;
+  width:184px;
   display:block;
   line-height:20px;
   height:40px;
   margin:0 10px;
-  padding:0;
+  padding:6px;
   background:transparent;
   border: 1px solid #d7d7d7;
   color: #444;
