@@ -43,7 +43,6 @@ InboxSDK.load('1', 'sdk_bonusly_cdf3f1c621').then(function(sdk) {
             getCompanyUsers().then(function(cu){
               all_company_users = []; //to prevent this list having duplicates when a new thread is loaded.
               _.each(cu.result, function(company_user){
-                console.log(company_user)
                 if(me.username != company_user.username){ all_company_users.push( company_user.first_name + ' ' + company_user.last_name + ' - ' + company_user.email + '<span style="display:none"> | ' + company_user.username +'</span>' )}
                 //if(_.indexOf(thread_users, company_user.email) >= 0){ if(me.username != company_user.username){ company_users.push('@'+company_user.username)}  }
               });
@@ -127,7 +126,6 @@ function addSidebar(threadview) {
 
 function resetSidebar(threadview) {
   threadView = threadview;
-  console.log('resetting', threadView);
   //addSidebar(threadView);
 }
 
